@@ -91,6 +91,15 @@
 <h2 id="u8BBE_u7F6Ewebpack"><a href="#u8BBE_u7F6Ewebpack" class="headerlink" title="设置webpack"></a>设置webpack</h2><p>webpack就是一个构建工具,将我们的应用代码生成静态资源文件.相比其他构建工具webpack有很多优势,比如可以剔除无用的代码,热更新模块,配置起来简单方便易操作.<br>在开始之前我们需要同时全局和在项目内安装webpack,全局安装是为了<code>webpack</code>命令可用,项目内安装可以让我们指定我们需要的版本,而不去依赖于全局安装的版本.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install webpack -g</span><br><span class="line">$ npm install webpack --save-dev</span><br></pre></td></tr></table></figure>
 <h3 id="u57FA_u672C_u914D_u7F6E"><a href="#u57FA_u672C_u914D_u7F6E" class="headerlink" title="基本配置"></a>基本配置</h3><p>我们需要新建一个<code>webpack.config.js</code>文件,在文件内输入下面内容.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  context: __dirname + <span class="string">"/app"</span>,</span><br><span class="line">  entry: <span class="string">"./app.js"</span>,</span><br><span class="line"></span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">"app.js"</span>,</span><br><span class="line">    path: __dirname + <span class="string">"/dist"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码告诉webpack我们的应用代码放在<code>app</code>目录里面,入口文件是<code>app.js</code>文件,输出JS文件路径及名称<code>dist/app.js</code>.<br>在<code>app/app.js</code>里面添加下面代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"webpack rocks!"</span>);</span><br></pre></td></tr></table></figure>
+<p>运行<code>webpack</code>命令,查看dist目录下面有没有生成<code>app.js</code>文件和我们写过的代码.</p>
+<h3 id="u6DFB_u52A0loaders"><a href="#u6DFB_u52A0loaders" class="headerlink" title="添加loaders"></a>添加loaders</h3><p>刚刚我们配置了最基本的让文件复制到<code>dist</code>目录下面,webpack最强大的是它的loaders.现在用loaders让我们的代码通过<a href="http://babeljs.io/" target="_blank" rel="external">Babel</a>将<a href="https://facebook.github.io/react/docs/jsx-in-depth.html" target="_blank" rel="external">JSX</a>编译成js.<br>幸运的是Babel同时支持ES2015和JSX,这样我们就只需要一个loader就搞定了.通过下面的命令安装.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install babel-loader babel-core babel-preset-es2015 --save-dev</span><br></pre></td></tr></table></figure>
+<p>添加一个<code>loaders</code>对象在之前<code>webpack.config.js</code>里面配置项的后面<br>在<code>webpack.config.js</code>里面配置项的里面,添加一个<code>loaders</code>对象,像下面这样写.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">  loaders: [</span><br><span class="line">    &#123;</span><br><span class="line">      test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">      exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</span><br><span class="line">      loaders: [<span class="string">'babel?presets[]=react,presets[]=es2015'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>webpack接受一个loader的对象数组,下面说说这几个参数.<br>test: 用正则来匹配文件路径，这段意思是匹配 js 或者 jsx<br>exclude: 正则匹配被排除的文件夹<br>loaders: 加载模块 “babel” 是 “babel-loader” 的缩写</p>
+<p>运行<code>webpack</code>命令,可以看到webpack依然可以编译成js.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
 <h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
@@ -103,56 +112,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/30/React-webpack-配置教程/" data-id="ciirn5xng0000v6u32mugjy0o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/30/React-webpack-配置教程/" data-id="ciirqbmsa00002eu3voqv8raz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript-es6-react-webpack/">javascript es6 react webpack</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/30/hello-world/" class="article-date">
-  <time datetime="2015-12-29T16:42:18.000Z" itemprop="datePublished">2015-12-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/30/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start_21"><a href="#Quick_Start_21" class="headerlink" title="Quick Start!"></a>Quick Start!</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/30/hello-world/" data-id="ciirn5xnr0001v6u3xi4sr0g6" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -205,10 +169,6 @@
         
           <li>
             <a href="/2015/12/30/React-webpack-配置教程/">React + webpack 配置教程</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/30/hello-world/">Hello World</a>
           </li>
         
       </ul>
