@@ -15,7 +15,7 @@
 <meta property="og:description" content="最近我在学习React并且试着找出一个好的配置环境,找了很多教程,其中也不乏有些问题,最后决定用webpack作为我的构建工具,现在跟大家分享一下我学习到的经验.
 初始化一个项目由于React没有任何工具来生成和管理项目,我们就要自己处理所有的事情.需要创建目录,初始化Git仓库,设置npm…
 123$ mkdir react-project &amp;amp;&amp;amp; cd react-project">
-<meta property="og:updated_time" content="2015-12-29T18:30:20.000Z">
+<meta property="og:updated_time" content="2015-12-29T18:32:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React + webpack 配置教程">
 <meta name="twitter:description" content="最近我在学习React并且试着找出一个好的配置环境,找了很多教程,其中也不乏有些问题,最后决定用webpack作为我的构建工具,现在跟大家分享一下我学习到的经验.
@@ -103,7 +103,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install babel-loader babel-core babel-preset-es2015 --save-dev</span><br></pre></td></tr></table></figure>
 <p>添加一个<code>loaders</code>对象在之前<code>webpack.config.js</code>里面配置项的后面<br>在<code>webpack.config.js</code>里面配置项的里面,添加一个<code>loaders</code>对象,像下面这样写.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">  loaders: [</span><br><span class="line">    &#123;</span><br><span class="line">      test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">      exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</span><br><span class="line">      loaders: [<span class="string">'babel?presets[]=react,presets[]=es2015'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>webpack接受一个loader的对象数组,下面说说这几个参数.<br>test: 用正则来匹配文件路径，这段意思是匹配 js 或者 jsx<br>exclude: 正则匹配被排除的文件夹<br>loaders: 加载模块 “babel” 是 “babel-loader” 的缩写</p>
+<p>webpack接受一个loaders的对象数组,下面说说这几个参数.<br>test: 用正则来匹配文件路径，这段意思是匹配 js 或者 jsx<br>exclude: 正则匹配被排除的文件夹/文件<br>loaders: 加载模块 “babel” 是 “babel-loader” 的缩写</p>
 <p>运行<code>webpack</code>命令,可以看到webpack依然可以编译成js.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
